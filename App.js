@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -64,7 +64,6 @@ function HomeStack () {
           },
         })} 
       />
-      {/* // Any additional screens located inside the stack of the tab Home */}
     </Stack.Navigator>
   );
 

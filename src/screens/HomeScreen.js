@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 5,
     height: 80, // Set a fixed height
-    width: 370, // Set a fixed width
+    width: 380, // Set a fixed width
     justifyContent: 'center', // Center the text vertically
   },
   listName: {
