@@ -5,26 +5,24 @@ import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import {ScrollView} from 'react-native';
 import { ListContext } from '../context/ListContext';
+import { DeletedListContext } from '../context/DeletedListContext';
+import uuid from 'react-native-uuid';
+import tinycolor from 'tinycolor2';
 
 export default function ListItemsScreen({ route }) {
   const navigation = useNavigation();
   const { lists, setLists, updateList } = useContext(ListContext);
   const [newItem, setNewItem] = useState('');
+  const { deletedLists, setDeletedLists } = useContext(DeletedListContext);
+  
+  const { list: incomingList } = route.params;
+  const list = lists.find(list => list.id === incomingList.id);
 
-  function isColorLight(color) {
-    const colorWithoutHash = color.slice(1); // remove #
-    const rgb = parseInt(colorWithoutHash, 16);   // convert rrggbb to decimal
-    const r = (rgb >> 16) & 0xff;  // extract red
-    const g = (rgb >>  8) & 0xff;  // extract green
-    const b = (rgb >>  0) & 0xff;  // extract blue
-  
-    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-  
-    return luma > 128;
-  }
+  // Check if list is defined before trying to access its items property
+ const [items, setItems] = useState(list ? list.items : []);
 
   useLayoutEffect(() => {
-    const headerTintColor = isColorLight(list.color) ? 'black' : 'white';
+    const headerTintColor = tinycolor(list.color).isLight() ? 'black' : 'white';
     
     navigation.setOptions({
       headerStyle: {
@@ -43,17 +41,11 @@ export default function ListItemsScreen({ route }) {
       ),
       headerTitleAlign: 'center', // Align the title to the center
     });
-  }, [navigation]);
-
-  const { list: incomingList } = route.params;
-  const list = lists.find(list => list.id === incomingList.id);
-
-  // Check if list is defined before trying to access its items property
- const [items, setItems] = useState(list ? list.items : []);
+  }, [navigation, list.color]);
 
   const handleAddItem = (text) => {
     if (text) {
-      const newItem = { id: items.length, name: text, checked: false, starred: false };
+      const newItem = { id: uuid.v4(), name: text, checked: false, starred: false };
       const newItems = [...items, newItem];
       setItems(newItems);
       updateList(list.id, newItems); // Update the items in the ListContext
@@ -75,6 +67,7 @@ export default function ListItemsScreen({ route }) {
 
   const handleDeleteList = () => {
     setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists
+    setDeletedLists([...deletedLists, list]); // Add the list to the deleted lists
     navigation.navigate('HomeScreen'); // Navigate back to the home screen
   };
 

@@ -4,6 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { ListContext } from '../context/ListContext';
+import uuid from 'react-native-uuid';
 
 export default function AddListScreen() {
     const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function AddListScreen() {
 
     const handleAddList = () => {
         if (listName && color !== '#FFFFFF') {
-            const newList = { id: lists.length + 1, name: listName, color, items: [] };
+            const newList = { id: uuid.v4(), name: listName, color, items: [] };
             setLists(prevLists => [...prevLists, newList]);
             navigation.navigate('ListItems', { list: newList });
         }

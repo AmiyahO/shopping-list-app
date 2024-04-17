@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { ListProvider } from './src/context/ListContext';
+import { DeletedListProvider } from './src/context/DeletedListContext';
 import HomeScreen from './src/screens/HomeScreen';
 import DeletedItemsScreen from './src/screens/DeletedItemsScreen';
 import FavouritesScreen from './src/screens/FavouritesScreen';
@@ -107,13 +108,21 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
-        name="Deleted Items" 
+        name="Recycle Bin" 
         component={DeletedItemsScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="trash-o" color={color} size={30} />
           ),
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 34, // Increase the font size
+          },
         }}
       />
     </Tab.Navigator>
@@ -126,10 +135,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ListProvider value={[lists, setLists]}>
-        <NavigationContainer>
-          <StatusBar style="auto" />
-          <TabNavigator />
-        </NavigationContainer>
+        <DeletedListProvider>
+          <NavigationContainer>
+            <StatusBar style="auto" />
+            <TabNavigator />
+          </NavigationContainer>
+        </DeletedListProvider>
       </ListProvider>
     </View>
   );
