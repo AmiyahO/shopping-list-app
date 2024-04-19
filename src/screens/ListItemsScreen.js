@@ -1,11 +1,11 @@
 // src/components/ListItemsScreen.js
-import React, { useContext, useState, useLayoutEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useContext, useEffect, useState, useLayoutEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import {ScrollView} from 'react-native';
 import { ListContext } from '../context/ListContext';
 import { DeletedListContext } from '../context/DeletedListContext';
+import { FavouritesContext } from '../context/FavouritesContext';
 import uuid from 'react-native-uuid';
 import tinycolor from 'tinycolor2';
 
@@ -14,14 +14,23 @@ export default function ListItemsScreen({ route }) {
   const { lists, setLists, updateList } = useContext(ListContext);
   const [newItem, setNewItem] = useState('');
   const { deletedLists, setDeletedLists } = useContext(DeletedListContext);
+  const { favourites, addFavourite, removeFavourite, toggleFavourite } = useContext(FavouritesContext);
   
   const { list: incomingList } = route.params;
   const list = lists.find(list => list.id === incomingList.id);
 
   // Check if list is defined before trying to access its items property
- const [items, setItems] = useState(list ? list.items : []);
+  const [items, setItems] = useState(list ? list.items : []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setItems(items.map(item => ({
+        ...item,
+        isFavourite: favourites.some(favItem => favItem.id === item.id),
+        starred: favourites.some(favItem => favItem.id === item.id) // Set starred property based on favourites
+    })));
+  }, [favourites]);
+ 
+ useLayoutEffect(() => {
     const headerTintColor = tinycolor(list.color).isLight() ? 'black' : 'white';
     
     navigation.setOptions({
@@ -60,7 +69,17 @@ export default function ListItemsScreen({ route }) {
   };
 
   const handleStarItem = (id) => {
-    const newItems = items.map((item) => item.id === id ? { ...item, starred: !item.starred } : item);
+    const newItems = items.map((item) => {
+      if (item.id === id) {
+        if (item.starred) {
+          removeFavourite(id);
+        } else {
+          addFavourite({ ...item, listColor: list.color });
+        }
+        return { ...item, starred: !item.starred };
+      }
+      return item;
+    });
     setItems(newItems);
     updateList(list.id, newItems); // Update the items in the ListContext
   };

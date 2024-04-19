@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { DeletedListContext } from '../context/DeletedListContext';
 import { ListContext } from '../context/ListContext';
 import { MaterialIcons } from '@expo/vector-icons';
-import tinycolor from 'tinycolor2';
 
 export default function DeletedItemsScreen() {
   const { deletedLists, restoreList } = useContext(DeletedListContext);
@@ -16,10 +15,6 @@ export default function DeletedItemsScreen() {
     }
   };
 
-  function getIconColor(backgroundColor) {
-    return tinycolor(backgroundColor).isDark() ? 'white' : 'black';
-  }
-  
   return (
     <View style={styles.container}>
       {deletedLists.map((list) => (
@@ -27,7 +22,7 @@ export default function DeletedItemsScreen() {
           <View style={styles.listItem}>
             <Text style={styles.listName}>{list.name}</Text>
             <TouchableOpacity title="Restore" onPress={() => handleRestoreList(list.id)}>
-              <MaterialIcons name="restore" size={30} color={getIconColor(list.color)} />
+              <MaterialIcons name="restore" size={30} color="white" />
             </TouchableOpacity>
           </View>
         </View>

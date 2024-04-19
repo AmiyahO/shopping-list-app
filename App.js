@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { ListProvider } from './src/context/ListContext';
 import { DeletedListProvider } from './src/context/DeletedListContext';
+import { FavouritesProvider } from './src/context/FavouritesContext';
 import HomeScreen from './src/screens/HomeScreen';
 import DeletedItemsScreen from './src/screens/DeletedItemsScreen';
 import FavouritesScreen from './src/screens/FavouritesScreen';
@@ -104,7 +105,14 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <FontAwesome name="star-o" color={color} size={30} />
           ),
-        
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 34, // Increase the font size
+          },
         }}
       />
       <Tab.Screen 
@@ -136,10 +144,12 @@ export default function App() {
     <View style={styles.container}>
       <ListProvider value={[lists, setLists]}>
         <DeletedListProvider>
-          <NavigationContainer>
-            <StatusBar style="auto" />
-            <TabNavigator />
-          </NavigationContainer>
+          <FavouritesProvider>
+            <NavigationContainer>
+              <StatusBar style="auto" />
+              <TabNavigator />
+            </NavigationContainer>
+          </FavouritesProvider>
         </DeletedListProvider>
       </ListProvider>
     </View>
