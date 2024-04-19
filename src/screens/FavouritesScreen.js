@@ -12,7 +12,7 @@ const FavouritesScreen = () => {
                 <Text>No favourite items yet!</Text>
             ) : (
                 <FlatList
-                    contentContainerStyle={styles.listContainer}
+                    style={styles.listContainer}
                     data={favourites}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (
@@ -46,7 +46,6 @@ const styles=StyleSheet.create({
     listContainer: {
         flex: 1,
         alignSelf: 'stretch', // Make the container take the full width
-        justifyContent: 'flex-start', // Start items from the top
         paddingTop: 30,
         paddingLeft: 30,
         paddingRight: 30,
