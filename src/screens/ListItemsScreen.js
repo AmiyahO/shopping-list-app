@@ -87,6 +87,14 @@ export default function ListItemsScreen({ route }) {
   const handleDeleteList = () => {
     setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists
     setDeletedLists([...deletedLists, list]); // Add the list to the deleted lists
+
+    // Remove any items from the deleted list that are in the favourites list
+    list.items.forEach(item => {
+      if (item.starred) {
+        removeFavourite(item.id);
+    }
+  });
+
     navigation.navigate('HomeScreen'); // Navigate back to the home screen
   };
 
