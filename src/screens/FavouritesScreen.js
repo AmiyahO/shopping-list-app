@@ -9,7 +9,7 @@ const FavouritesScreen = () => {
     return (
         <View style={styles.container}>
             {favourites.length === 0 ? (
-                <Text>No favourite items yet!</Text>
+                <Text style={styles.placeholderText}>No favourite items yet!</Text>
             ) : (
                 <FlatList
                     style={styles.listContainer}
@@ -70,6 +70,13 @@ const styles=StyleSheet.create({
       listItemText: {
         fontSize: 20,
         marginLeft: 10, // Add some margin to the left of the text
+      },
+      placeholderText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'black',
+        paddingTop: 50,
       },
 })
 

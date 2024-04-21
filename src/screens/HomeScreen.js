@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { ListContext } from '../context/ListContext';
 
-export default function HomeScreen( ) {
+export default function HomeScreen() {
   
   const navigation = useNavigation();
   const { lists, setLists} = useContext(ListContext);

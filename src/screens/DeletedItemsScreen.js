@@ -17,16 +17,20 @@ export default function DeletedItemsScreen() {
 
   return (
     <View style={styles.container}>
-      {deletedLists.map((list) => (
-        <View key={list.id} style={[styles.list, {backgroundColor: list.color}]}>
-          <View style={styles.listItem}>
-            <Text style={styles.listName}>{list.name}</Text>
-            <TouchableOpacity title="Restore" onPress={() => handleRestoreList(list.id)}>
-              <MaterialIcons name="restore" size={30} color="white" />
-            </TouchableOpacity>
+      {deletedLists.length === 0 ? (
+      <Text style={styles.placeholderText}>No deleted lists yet!</Text>
+    ) : (
+        deletedLists.map((list) => (
+          <View key={list.id} style={[styles.list, {backgroundColor: list.color}]}>
+            <View style={styles.listItem}>
+              <Text style={styles.listName}>{list.name}</Text>
+              <TouchableOpacity title="Restore" onPress={() => handleRestoreList(list.id)}>
+                <MaterialIcons name="restore" size={30} color="white" />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      ))}
+        ))
+    )}
     </View>
   );
 }
@@ -56,5 +60,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
   },
 });

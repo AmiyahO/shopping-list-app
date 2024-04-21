@@ -1,38 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { ListProvider } from './src/context/ListContext';
 import { DeletedListProvider } from './src/context/DeletedListContext';
 import { FavouritesProvider } from './src/context/FavouritesContext';
+import { UserProvider } from './src/context/UserContext';
 import HomeScreen from './src/screens/HomeScreen';
 import DeletedItemsScreen from './src/screens/DeletedItemsScreen';
 import FavouritesScreen from './src/screens/FavouritesScreen';
 import AddListScreen from './src/screens/AddListScreen';
 import ListItemsScreen from './src/screens/ListItemsScreen';
+import LoginForm from './src/screens/LoginScreen';
+import { UserContext } from './src/context/UserContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeStack () {
+  const { name } = useContext(UserContext); // Retrieve name from UserContext
+  
   return (
     <Stack.Navigator initialRouteName='HomeScreen'>
       <Stack.Screen 
         name="HomeScreen" 
         component={HomeScreen}
         options={{
-          title: 'Welcome, User!',
+          title: `Welcome, ${name}!`,
           headerStyle: {
             backgroundColor: 'white',
           },
           headerTintColor: 'black',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 34, // Increase the font size
+            fontSize: 34,
           },
         }}
       />
@@ -75,7 +79,6 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        
         tabBarStyle: {
           backgroundColor: '#5500A9',
           height: 56,
@@ -139,16 +142,33 @@ function TabNavigator() {
 
 export default function App() {
   const [lists, setLists] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Add a state to track login status
+  const [userName, setUserName] = useState('');
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const onLoginSuccess = () => {
+    // Logic to handle successful login
+    console.log('Login successful');
+  };
   
   return (
     <View style={styles.container}>
       <ListProvider value={[lists, setLists]}>
         <DeletedListProvider>
           <FavouritesProvider>
-            <NavigationContainer>
-              <StatusBar style="auto" />
-              <TabNavigator />
-            </NavigationContainer>
+            <UserProvider setName={setUserName}>
+              <NavigationContainer>
+                <StatusBar style="auto" />
+                {!isLoggedIn ? (
+                  <LoginForm onLoginSuccess={handleLogin} />
+                ) : (
+                  <TabNavigator />
+                )}
+              </NavigationContainer>
+            </UserProvider>
           </FavouritesProvider>
         </DeletedListProvider>
       </ListProvider>
