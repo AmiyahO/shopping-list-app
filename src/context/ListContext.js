@@ -12,6 +12,9 @@ export const ListProvider = ({ children }) => {
 
     // Re-Add a list to the lists?
     function addList(list) {
+      // Remove the starred property from the items of the list
+      const listToRestore = { ...list, items: list.items.map(item => ({ ...item, starred: false })) };
+      
       setLists(prevLists => [...prevLists, list]);
     }
   

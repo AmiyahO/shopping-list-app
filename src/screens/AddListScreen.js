@@ -12,7 +12,7 @@ export default function AddListScreen() {
     const [listName, setListName] = useState('');
     const [color, setColor] = useState('#FFFFFF');
 
-    const colors = ['#2C0058', '#3B60B4', '#B21544', '#8FD810', '#525252'];
+    const colors = ['#2C0058', '#3B60B4', '#B21544', '#8FD810', '#525252']; // should i add purple to the colors array?
 
     const handleAddList = () => {
         if (listName && color !== '#FFFFFF') {

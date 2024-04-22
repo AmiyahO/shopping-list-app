@@ -22,22 +22,22 @@ const Tab = createBottomTabNavigator();
 
 function HomeStack () {
   const { name } = useContext(UserContext); // Retrieve name from UserContext
-  
+
   return (
     <Stack.Navigator initialRouteName='HomeScreen'>
       <Stack.Screen 
         name="HomeScreen" 
         component={HomeScreen}
         options={{
-          title: `Welcome, ${name}!`,
+          headerTitle: () => (
+            <Text style={{ marginLeft: 0, fontWeight: 'bold', fontSize: 32 }}>
+              {`Welcome, ${name}!`}
+            </Text>
+          ),
           headerStyle: {
             backgroundColor: 'white',
           },
           headerTintColor: 'black',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 34,
-          },
         }}
       />
       <Stack.Screen 
@@ -145,15 +145,10 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);  // Add a state to track login status
   const [userName, setUserName] = useState('');
 
-  const handleLogin = () => {
+  const changeLoginState = (name) => {
     setIsLoggedIn(true);
   };
 
-  const onLoginSuccess = () => {
-    // Logic to handle successful login
-    console.log('Login successful');
-  };
-  
   return (
     <View style={styles.container}>
       <ListProvider value={[lists, setLists]}>
@@ -163,7 +158,7 @@ export default function App() {
               <NavigationContainer>
                 <StatusBar style="auto" />
                 {!isLoggedIn ? (
-                  <LoginForm onLoginSuccess={handleLogin} />
+                  <LoginForm onLoginSuccess={changeLoginState} />
                 ) : (
                   <TabNavigator />
                 )}

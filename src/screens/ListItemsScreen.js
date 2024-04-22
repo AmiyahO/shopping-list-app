@@ -25,7 +25,6 @@ export default function ListItemsScreen({ route }) {
   useEffect(() => {
     setItems(items.map(item => ({
         ...item,
-        isFavourite: favourites.some(favItem => favItem.id === item.id),
         starred: favourites.some(favItem => favItem.id === item.id) // Set starred property based on favourites
     })));
   }, [favourites]);
@@ -57,6 +56,7 @@ export default function ListItemsScreen({ route }) {
       const newItem = { id: uuid.v4(), name: text, checked: false, starred: false };
       const newItems = [...items, newItem];
       setItems(newItems);
+      
       updateList(list.id, newItems); // Update the items in the ListContext
       setNewItem(''); // Clear the TextInput
     }
@@ -85,17 +85,22 @@ export default function ListItemsScreen({ route }) {
   };
 
   const handleDeleteList = () => {
-    setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists
-    setDeletedLists([...deletedLists, list]); // Add the list to the deleted lists
-
-    // Remove any items from the deleted list that are in the favourites list
-    list.items.forEach(item => {
-      if (item.starred) {
-        removeFavourite(item.id);
+    // Find the list in the lists
+    const listToDelete = lists.find(l => l.id === list.id);
+    
+    if (listToDelete) {
+      setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists
+      setDeletedLists([...deletedLists, listToDelete]); // Add the list to the deleted lists
+  
+      // Remove any items from the deleted list that are in the favourites list
+      listToDelete.items.forEach(item => {
+        if (item.starred) {
+          removeFavourite(item.id);
+        }
+      });
+  
+      navigation.navigate('HomeScreen'); // Navigate back to the home screen
     }
-  });
-
-    navigation.navigate('HomeScreen'); // Navigate back to the home screen
   };
 
   return (

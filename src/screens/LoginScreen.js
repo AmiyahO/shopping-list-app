@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import LocationComponent from '../components/LocationComponent';
 import RestAPIComponent from '../components/WeatherComponent';
+import { UserContext } from '../context/UserContext';
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [latitude, setLatitude] = useState(null); // Add latitude state variable
   const [longitude, setLongitude] = useState(null); // Add longitude state variable
+  const { setUserName } = useContext(UserContext);
 
   const handleLogin = () => {
+    setUserName(name); // Set the name in the UserContext
+    onLoginSuccess(); // Call the onLoginSuccess function
     console.log('Logging in with Name:', name, 'Surname:', surname);
-    setName(name); // Update the name state with the entered name
-    onLoginSuccess();
   };
 
   const handleLocationSuccess = (latitude, longitude) => {
