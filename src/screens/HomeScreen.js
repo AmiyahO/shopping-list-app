@@ -87,8 +87,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // image: {
-  //   width: 200,
-  //   height: 200,
-  // },
 });
