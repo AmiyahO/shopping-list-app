@@ -26,7 +26,7 @@ export default function HomeScreen() {
       ) : (
         <View style={styles.placeholderContainer}>
           <Image source={require('../../assets/list-picture.png')} style={styles.image} />
-          <Text style={styles.placeholderText}>No lists yet. {"\n"}Click the "+" button to create a new list.</Text>
+          <Text style={styles.placeholderText}>No lists yet {"\n"}Click the "+" button to create a new list</Text>
         </View>
       )}
     </ScrollView>
