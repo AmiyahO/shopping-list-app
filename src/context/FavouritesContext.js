@@ -5,19 +5,21 @@ export const FavouritesContext = createContext();
 export const FavouritesProvider = ({ children }) => {
   const [favourites, setFavourites] = useState([]);
 
-  // Step 2: addFavourite function
+  // Function to add an item to the favourites array
   const addFavourite = (item) => {
     setFavourites(prevFavourites => [...prevFavourites, item]);
   };
 
-  // Step 3: removeFavourite function
+  // Function to remove an item from the favourites array
   const removeFavourite = (itemId) => {
     setFavourites(prevFavourites => prevFavourites.filter(item => item.id !== itemId));
   };
 
+  // Function to toggle an item as a favourite
   const toggleFavourite = (item) => {
     setFavourites((prevFavourites) => {
         const isFavourite = prevFavourites.some((favItem) => favItem.id === item.id);
+
         if (isFavourite) {
             return prevFavourites.filter((favItem) => favItem.id !== item.id);
         } else {

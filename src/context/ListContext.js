@@ -1,4 +1,3 @@
-// ListContext.js
 import React, { createContext, useState } from 'react';
 
 export const ListContext = createContext();
@@ -10,11 +9,10 @@ export const ListProvider = ({ children }) => {
       setLists((prevLists) => prevLists.map((list) => list.id === id ? { ...list, items } : list));
     };
 
-    // Re-Add a list to the lists?
+    // Re-Add a list to the lists array
     function addList(list) {
-      // Remove the starred property from the items of the list
+      // Remove the starred property from the items of the list to restore
       const listToRestore = { ...list, items: list.items.map(item => ({ ...item, starred: false })) };
-      
       setLists(prevLists => [...prevLists, list]);
     }
   

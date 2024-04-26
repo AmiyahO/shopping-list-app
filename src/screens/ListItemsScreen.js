@@ -1,4 +1,3 @@
-// src/components/ListItemsScreen.js
 import React, { useContext, useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
@@ -14,7 +13,7 @@ export default function ListItemsScreen({ route }) {
   const { lists, setLists, updateList } = useContext(ListContext);
   const [newItem, setNewItem] = useState('');
   const { deletedLists, setDeletedLists } = useContext(DeletedListContext);
-  const { favourites, addFavourite, removeFavourite, toggleFavourite } = useContext(FavouritesContext);
+  const { favourites, addFavourite, removeFavourite } = useContext(FavouritesContext);
   
   const { list: incomingList } = route.params;
   const list = lists.find(list => list.id === incomingList.id);
@@ -30,13 +29,14 @@ export default function ListItemsScreen({ route }) {
   }, [favourites]);
  
  useLayoutEffect(() => {
-    const headerTintColor = tinycolor(list.color).isLight() ? 'black' : 'white';
+  // Set the header background color to the list color and the text color based on the list color  
+  const headerTintColor = tinycolor(list.color).isLight() ? 'black' : 'white';
     
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: list.color, // Set the header background color to the list color
+        backgroundColor: list.color,
       },
-      headerTintColor: headerTintColor, // Set the header text (and icons) color
+      headerTintColor: headerTintColor,
       headerLeft: () => (
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} >
           <Ionicons name="arrow-back" size={25} color={headerTintColor} />
@@ -47,7 +47,7 @@ export default function ListItemsScreen({ route }) {
           <Ionicons name="trash" size={25} color={headerTintColor} />
         </TouchableOpacity>
       ),
-      headerTitleAlign: 'center', // Align the title to the center
+      headerTitleAlign: 'center',
     });
   }, [navigation, list.color]);
 
@@ -68,6 +68,7 @@ export default function ListItemsScreen({ route }) {
     updateList(list.id, newItems); // Update the items in the ListContext
   };
 
+  // Add or remove an item from the favourites list based on the star icon being pressed
   const handleStarItem = (id) => {
     const newItems = items.map((item) => {
       if (item.id === id) {
@@ -85,12 +86,12 @@ export default function ListItemsScreen({ route }) {
   };
 
   const handleDeleteList = () => {
-    // Find the list in the lists
+    // Find the list in the lists array
     const listToDelete = lists.find(l => l.id === list.id);
     
     if (listToDelete) {
-      setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists
-      setDeletedLists([...deletedLists, listToDelete]); // Add the list to the deleted lists
+      setLists(lists.filter(l => l.id !== list.id)); // Remove the list from the lists array
+      setDeletedLists([...deletedLists, listToDelete]); // Add the list to the deleted lists array
   
       // Remove any items from the deleted list that are in the favourites list
       listToDelete.items.forEach(item => {
@@ -129,7 +130,7 @@ export default function ListItemsScreen({ route }) {
             onChangeText={setNewItem}
             onSubmitEditing={(event) => handleAddItem(event.nativeEvent.text)}
             placeholder="Add new item"
-            value={newItem} // Bind the newItem state to the TextInput value
+            value={newItem}
           />
           <TouchableOpacity style={styles.addButton} onPress={() => handleAddItem(newItem)}>
             <Ionicons name="add" size={30} color="white" />
@@ -150,17 +151,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20, // Add some padding at the bottom
+    marginBottom: 20,
     paddingTop: 20,
   },
   listContainer: {
     flex: 1,
-    alignSelf: 'stretch', // Make the container take the full width
-    justifyContent: 'flex-start', // Start items from the top
+    alignSelf: 'stretch',
+    justifyContent: 'flex-start',
     paddingTop: 30,
     paddingLeft: 30,
     paddingRight: 30,
-    paddingBottom: 0, // Remove padding from the bottom
+    paddingBottom: 0,
   },
   input: {
     height: 50,
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 30,
-    marginRight: 15, // Add some margin to the right
+    marginRight: 15,
   },
   addButton: {
     backgroundColor: '#5500A9',
@@ -198,13 +199,13 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 20,
-    marginLeft: 10, // Add some margin to the left of the text
+    marginLeft: 10,
   },
   listItemButtons: {
     flexDirection: 'row',
   },
   checkedItemText: {
-    textDecorationLine: 'line-through', // Cross out the text
-    color: 'gray', // Grey out the text
+    textDecorationLine: 'line-through',
+    color: 'gray',
   },
 });

@@ -8,6 +8,7 @@ export default function DeletedItemsScreen() {
   const { deletedLists, restoreList } = useContext(DeletedListContext);
   const { addList } = useContext(ListContext);
 
+  // Restore a list from the deleted lists array and add it back to the lists array
   const handleRestoreList = (id) => {
     const list = restoreList(id);
     if (list) {
@@ -48,12 +49,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
     marginTop: 5,
-    height: 80, // Set a fixed height
-    width: 380, // Set a fixed width
-    justifyContent: 'center', // Center the text vertically
+    height: 80,
+    width: 380,
+    justifyContent: 'center',
   },
   listName: {
-    color: 'white', // Change the text color to white
+    color: 'white',
     fontSize: 30,
   },
   listItem: {

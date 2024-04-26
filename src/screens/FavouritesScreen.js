@@ -21,14 +21,7 @@ const FavouritesScreen = () => {
                                 <FontAwesome name="circle" size={24} color={item.listColor} style={{ marginRight: 4 }} />
                                 <Text style={styles.listItemText}>{item.name}</Text>
                             </View>
-                                <FontAwesome 
-                                    name="star" // Always show star icon, but change color based on starred property
-                                    size={24} 
-                                    color="gold" 
-                                    onPress={() => toggleFavourite(item)}
-                                /> 
-                                {/* You can add additional item details here */}
-                            
+                            <FontAwesome name="star" size={24} color="gold" onPress={() => toggleFavourite(item)} /> 
                         </TouchableOpacity>
                     )}
                 />
@@ -45,11 +38,11 @@ const styles=StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        alignSelf: 'stretch', // Make the container take the full width
+        alignSelf: 'stretch',
         paddingTop: 30,
         paddingLeft: 30,
         paddingRight: 30,
-        paddingBottom: 0, // Remove padding from the bottom
+        paddingBottom: 0,
     },
     listItem: {
         flexDirection: 'row',
@@ -69,7 +62,7 @@ const styles=StyleSheet.create({
       },
       listItemText: {
         fontSize: 20,
-        marginLeft: 10, // Add some margin to the left of the text
+        marginLeft: 10,
       },
       placeholderText: {
         fontSize: 20,

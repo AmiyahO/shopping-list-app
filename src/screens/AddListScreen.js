@@ -1,4 +1,3 @@
-// src/screens/AddListScreen.js
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -12,13 +11,17 @@ export default function AddListScreen() {
     const [listName, setListName] = useState('');
     const [color, setColor] = useState('#FFFFFF');
 
-    const colors = ['#2C0058', '#3B60B4', '#B21544', '#8FD810', '#525252']; // should i add purple to the colors array?
+    // Array of colors to choose from
+    const colors = ['#2C0058', '#3B60B4', '#B21544', '#8FD810', '#525252'];
 
+    // Add a new list to the lists array and navigate to the ListItems screen
     const handleAddList = () => {
+        // Check if the list name is not empty and a color has been selected
         if (listName && color !== '#FFFFFF') {
+            // Create a new list object with a unique id, the list name, the selected color, and an empty items array
             const newList = { id: uuid.v4(), name: listName, color, items: [] };
             setLists(prevLists => [...prevLists, newList]);
-            navigation.navigate('ListItems', { list: newList });
+            navigation.navigate('ListItems', { list: newList }); // Navigate to the ListItems screen with the new list
         }
     };
 

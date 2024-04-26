@@ -7,13 +7,13 @@ import { UserContext } from '../context/UserContext';
 const LoginForm = ({ onLoginSuccess }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
-  const [latitude, setLatitude] = useState(null); // Add latitude state variable
-  const [longitude, setLongitude] = useState(null); // Add longitude state variable
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const { setUserName } = useContext(UserContext);
 
   const handleLogin = () => {
     setUserName(name); // Set the name in the UserContext
-    onLoginSuccess(); // Call the onLoginSuccess function
+    onLoginSuccess();
     console.log('Logging in with Name:', name, 'Surname:', surname);
   };
 

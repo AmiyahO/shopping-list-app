@@ -8,11 +8,13 @@ const RestAPIComponent = ({ latitude, longitude }) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
+    // Fetch weather data from the API when the latitude and longitude are available
     if (latitude && longitude) {
       getWeatherDataFromAPI();
     }
   }, [latitude, longitude]);
 
+  // Fetch weather data from the OpenWeatherMap API
   const getWeatherDataFromAPI = async () => {
     try {
       console.log("Loading data ... ");
@@ -30,7 +32,8 @@ const RestAPIComponent = ({ latitude, longitude }) => {
       setErrorMsg('Error fetching weather data');
     }
   };
-
+  
+  // Render the weather icon based on the weather data
   const renderWeatherIcon = () => {
     if (!data || !data.weather || data.weather.length === 0) {
       return <Text style={styles.text}>Weather data not available</Text>;
@@ -38,6 +41,7 @@ const RestAPIComponent = ({ latitude, longitude }) => {
     
     const iconCode = data.weather[0].icon;
     
+    // change weather api icon based on the icon code
     switch (iconCode) {
       case '01d':
         return <Feather name="sun" size={30} color="#FFD700" />;

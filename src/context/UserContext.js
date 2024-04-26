@@ -11,7 +11,7 @@ export function UserProvider({ children }) {
   
   const value = {
     name,
-    setUserName, // Add the setUserName function to the context value
+    setUserName,
   };
 
   return (

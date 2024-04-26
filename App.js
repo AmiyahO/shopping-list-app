@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeStack () {
-  const { name } = useContext(UserContext); // Retrieve name from UserContext
+  const { name } = useContext(UserContext); // Get the name from the UserContext
 
   return (
     <Stack.Navigator initialRouteName='HomeScreen'>
@@ -114,7 +114,7 @@ function TabNavigator() {
           headerTintColor: 'black',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 34, // Increase the font size
+            fontSize: 34,
           },
         }}
       />
@@ -132,7 +132,7 @@ function TabNavigator() {
           headerTintColor: 'black',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 34, // Increase the font size
+            fontSize: 34,
           },
         }}
       />
@@ -142,7 +142,7 @@ function TabNavigator() {
 
 export default function App() {
   const [lists, setLists] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Add a state to track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
 
   const changeLoginState = (name) => {

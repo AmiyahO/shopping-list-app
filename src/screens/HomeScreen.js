@@ -1,4 +1,3 @@
-// src/screens/HomeScreen.js
 import React, { useContext } from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -61,12 +60,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
     marginTop: 5,
-    height: 80, // Set a fixed height
-    width: 380, // Set a fixed width
-    justifyContent: 'center', // Center the text vertically
+    height: 80,
+    width: 380,
+    justifyContent: 'center',
   },
   listName: {
-    color: 'white', // Change the text color to white
+    color: 'white',
     fontSize: 30,
   },
   placeholderContainer: {
