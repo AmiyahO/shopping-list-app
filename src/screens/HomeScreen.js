@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'black',
-    paddingTop: 80,
+    paddingTop: 100,
   },
   scrollView: {
     flexGrow: 1,
