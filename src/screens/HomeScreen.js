@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 5,
     height: 80,
-    width: 380,
+    width: 350,
     justifyContent: 'center',
   },
   listName: {
