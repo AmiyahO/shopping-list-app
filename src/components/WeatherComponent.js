@@ -55,17 +55,23 @@ const RestAPIComponent = ({ latitude, longitude }) => {
         return <MaterialCommunityIcons name="weather-partly-cloudy" size={30} color="gray" />;
       case '03n':
         return <MaterialCommunityIcons name="weather-night-partly-cloudy" size={30} color="gray" />;
-      case '04d' || '04n':
+      case '04d':
+      case '04n':
         return <FontAwesome name="cloud" size={30} color="gray" />;
-      case '09d' || '09n':
+      case '09d':
+      case '09n':
         return <FontAwesome5 name="cloud-showers-heavy" size={30} color="gray" />;
-      case '10d' || '10n':
+      case '10d':
+      case '10n':
         return <Ionicons name="rainy" size={30} color="blue" />;
-      case '11d' || '11n':
+      case '11d':
+      case '11n':
         return <Fontisto name="lightning" size={30} color="midnightblue" />;
-      case '13d' || '13n':
+      case '13d':
+      case '13n':
         return <FontAwesome5 name="snowflake" size={30} color="#ADD8E6" />;
-      case '50d' || '50n':
+      case '50d':
+      case '50n':
         return <MaterialCommunityIcons name="weather-fog" size={30} color="gray" />;
       default:
         return <Ionicons name="thermometer-outline" size={30} color="#5500A9" />;
